@@ -12,9 +12,9 @@ az login
 
 terraform init
 
-terraform plan 
+terraform plan -var 'local_ip_address=your_ip_addres'
 
-terraform apply 
+terraform apply -var 'local_ip_address=your_ip_addres'
 
 
 connect to VM 
@@ -24,4 +24,4 @@ ssh -i test1 azureuser@ip_address
 http://ip_address:8080 - connect to Jenkins
 
 terraform apply -var 'environmenttag=jenkins'   - change tag from null to value 
-terraform apply -var 'local_ip_address=your_ip_addres'  
+terraform apply -var 'local_ip_address=your_ip_addres'  -change local_ip_addres to your local ip 
