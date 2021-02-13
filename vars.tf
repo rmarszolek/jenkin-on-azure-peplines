@@ -9,7 +9,7 @@ variable "prefix" {
 
 variable "local_ip_address" {
    type = string
-   default = "178.218.234.221"
+   default = ""
 }
 
 
