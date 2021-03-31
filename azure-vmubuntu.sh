@@ -7,3 +7,5 @@ sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sou
 sudo apt-get update && apt-get install jenkins -y
 sudo apt install openjdk-8-jdk -y
 sudo service jenkins restart
+sudo apt update
+sudo apt install git
