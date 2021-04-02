@@ -1,0 +1,44 @@
+stages:
+  - stage: terraform_plan
+    jobs:
+    - deployment: Terraform_Plan
+      displayName: Terraform_Plan
+      pool:
+        vmImage: 'Ubuntu-16.04'
+      # creates an environment if it doesn't exist
+      environment: 'terraform_plan'
+      strategy:
+        runOnce:
+          deploy:
+            steps:
+            - checkout: self
+            - task: AzureKeyVault@1
+              inputs:
+                azureSubscription: 'azdo-spn'
+                KeyVaultName: 'devosp104'
+                SecretsFilter: 'subscription-id,backend-key1,client-id,object-id,secret-id,tenant-id'
+              displayName: 'Get key vault secrets as pipeline variables'
+
+            - task: TerraformInstaller@0
+              inputs:
+                terraformVersion: '0.14.5'
+
+            - task: AzureCLI@1
+              inputs:
+                azureSubscription: 'azdo-spn'
+                scriptLocation: 'inlineScript'
+                inlineScript: 'terraform version'
+              displayName: "Terraform Version"
+            
+            - script: |
+                az login --service-principal -u $(client-id) -p $(secret-id) --tenant $(tenant-id)
+                cd $(System.DefaultWorkingDirectory)
+                ls -la
+                echo '#######Terraform Init########'
+                terraform init -backend-config="storage_account_name=devops104" -backend-config="container_name=tfstate" -backend-config="access_key=$(backend-key1)" -backend-config="key=jenkins.tfstate"
+                echo terraform init -backend-config="storage_account_name=devops104" -backend-config="container_name=tfstate" -backend-config="access_key=$(backend-key1)" -backend-config="key=jenkins.tfstate"                 
+                echo'######## Terraform INIT #######'
+                echo '#######Terraform Plan########'
+                terraform plan  -var="client_id=$(client-id)" -var="client_secret=$(secret-id)" -var="tenant_id=$(tenant-id)" -var="subscription_id=$(subscription-id)" -out="out.plan"
+                echo terraform plan  -var="client_id=$(client-id)" -var="client_secret=$(secret-id)" -var="tenant_id=$(tenant-id)" -var="subscription_id=$(subscription-id)" -out="out.plan"
+                echo '#######Terraform Plan########'                
