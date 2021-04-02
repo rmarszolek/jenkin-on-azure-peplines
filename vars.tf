@@ -9,7 +9,7 @@ variable "location" {
 }
 variable "prefix" {
   type    = string
-  default = "jenkinsN"
+  default = "jenkins"
 }
 
 variable "local_ip_address" {
