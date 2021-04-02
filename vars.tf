@@ -1,15 +1,20 @@
+variable "client_id" {} 
+variable "client_secret" {}
+variable "tenant_id" {}
+variable "subscription_id" {}
+
 variable "location" {
   type    = string
   default = "westeurope"
 }
 variable "prefix" {
   type    = string
-  default = "jenkins"
+  default = "jenkinsx"
 }
 
 variable "local_ip_address" {
    type = string
-   default = ""
+   default = "178.218.234.221"
 }
 
 

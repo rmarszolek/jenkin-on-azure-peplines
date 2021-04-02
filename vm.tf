@@ -1,13 +1,5 @@
 
-// add virtual machine - ubuntu 
-/* generate key pair
-resource "tls_private_key" "ubuntu_ssh" {
-  algorithm = "RSA"
-  rsa_bits = 4096
-}
 
-output "tls_private_key" { value = tls_private_key.ubuntu_ssh.private_key_pem }
-*/
 
 // network interface creation
 # Create public IPs
